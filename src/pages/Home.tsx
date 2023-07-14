@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import fetcher from "@/api/fetcher";
+import { PATH } from "@/constants";
 import { cityList } from "@/state/common";
 
 const Home = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList as any);
-  const [randomCity, setRandomCity] = useState<string | null>(null);
+  const [randomCity, setRandomCity] = useState<any | null>(null);
 
   const getCityList = async () => {
     try {
-      const res: any = await fetcher("get", "/data/citylist.json", {});
-      if (res.data.length === 0) {
-        console.log("no data");
-      }
-      setCities(res.data);
-      console.log("newCities", res.data[0].name);
+      const res: any = await fetcher("get", `/data/citylist.json`, {});
+
+      if (res.data.length === 0) console.log("no data");
+      else setCities(res.data);
+
+      // console.log("newCities", res.data[0].name);
     } catch (error) {
       alert(error);
     }
@@ -26,7 +28,7 @@ const Home = () => {
     if (!cities || cities.length === 0) {
       getCityList();
     } else {
-      const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)]?.name;
+      const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)];
       setRandomCity(selectedRandomCity || null);
     }
   }, [cities]);
@@ -35,16 +37,21 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      {randomCity && (
-        <Title>
-          오늘 <TitleUnderlined>{randomCity}</TitleUnderlined> 의 날씨는?
-        </Title>
-      )}
-
+      <TitleContainer>
+        오늘
+        {randomCity && (
+          <StyledLink to={`${PATH.DETAIL}/${randomCity?.id}`}>{randomCity?.name}</StyledLink>
+        )}
+        의 날씨는?
+      </TitleContainer>
       <CityListContainer>
         {cityList &&
           cities.map((city: any, id: number) => {
-            return <CityListBox key={id}>{city.name}</CityListBox>;
+            return (
+              <Link key={id} to={`${PATH.DETAIL}/${city.id}`}>
+                <CityListBox>{city.name}</CityListBox>
+              </Link>
+            );
           })}
       </CityListContainer>
     </HomeContainer>
@@ -57,23 +64,25 @@ const HomeContainer = styled.div`
   overflow: scroll;
 `;
 
-const Title = styled.h1`
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
   margin: 4em;
   font-size: 2em;
   font-weight: bold;
   text-align: center;
 `;
 
-const TitleUnderlined = styled.span`
+const StyledLink = styled(Link)`
+  margin: 0 0.5em;
   text-decoration: underline;
-  cursor: pointer;
 `;
 
 const CityListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-auto-rows: minmax(100px, auto);
-  grid-gap: 10px;
+  grid-gap: 1em;
   height: 100%;
   overflow: scroll;
 `;

@@ -5,6 +5,7 @@ import { Loading } from "@/components/common";
 import { PATH } from "@/constants";
 
 const Home = lazy(() => import("@/pages/Home"));
+const Detail = lazy(() => import("@/pages/Detail"));
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path={PATH.HOME} element={<Home />} />
+          <Route path={`${PATH.DETAIL}/:id`} element={<Detail />} />
           <Route path={PATH.ALL} element={<Navigate to={PATH.HOME} replace />} />
         </Routes>
       </Suspense>
