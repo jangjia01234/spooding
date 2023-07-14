@@ -20,16 +20,20 @@ const Home = () => {
 
       // console.log("newCities", res.data[0].name);
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    if (!cities || cities.length === 0) {
-      getCityList();
-    } else {
-      const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)];
-      setRandomCity(selectedRandomCity || null);
+    try {
+      if (!cities || cities.length === 0) {
+        getCityList();
+      } else {
+        const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)];
+        setRandomCity(selectedRandomCity || null);
+      }
+    } catch (error) {
+      console.error(error);
     }
   }, [cities]);
 
@@ -71,6 +75,7 @@ const TitleContainer = styled.div`
   font-size: 2em;
   font-weight: bold;
   text-align: center;
+  white-space: nowrap;
 `;
 
 const StyledLink = styled(Link)`

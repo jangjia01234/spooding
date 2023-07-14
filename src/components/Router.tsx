@@ -1,11 +1,12 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Loading } from "@/components/common";
 import { PATH } from "@/constants";
 
 const Home = lazy(() => import("@/pages/Home"));
 const Detail = lazy(() => import("@/pages/Detail"));
+const Error404 = lazy(() => import("@/pages/Error404"));
 
 const Router = () => {
   return (
@@ -14,7 +15,7 @@ const Router = () => {
         <Routes>
           <Route path={PATH.HOME} element={<Home />} />
           <Route path={`${PATH.DETAIL}/:id`} element={<Detail />} />
-          <Route path={PATH.ALL} element={<Navigate to={PATH.HOME} replace />} />
+          <Route path={PATH.ALL} element={<Error404 />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
