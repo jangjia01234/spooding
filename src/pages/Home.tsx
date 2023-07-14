@@ -48,6 +48,7 @@ const Home = () => {
         )}
         의 날씨는?
       </TitleContainer>
+
       <CityListContainer>
         {cityList &&
           cities.map((city: any, id: number) => {
@@ -63,15 +64,17 @@ const Home = () => {
 };
 
 const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   padding: 0 10em;
   overflow: scroll;
 `;
 
 const TitleContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 4em;
+  margin: 4em 2em;
   font-size: 2em;
   font-weight: bold;
   text-align: center;
@@ -86,7 +89,7 @@ const StyledLink = styled(Link)`
 const CityListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(50px, auto);
   grid-gap: 1em;
   height: 100%;
   overflow: scroll;
@@ -94,7 +97,7 @@ const CityListContainer = styled.div`
 
 const CityListBox = styled.div`
   padding: 1em;
-  background-color: lightgray;
+  background-color: #ececec;
   border-radius: 10px;
   cursor: pointer;
 `;

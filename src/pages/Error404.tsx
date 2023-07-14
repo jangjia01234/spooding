@@ -33,7 +33,7 @@ const BackToHome = styled.button`
   font-size: 1.5em;
   font-weight: bold;
   border-radius: 10px;
-  background-color: lightgray;
+  background-color: #ececec;
 `;
 
 export default Error404;

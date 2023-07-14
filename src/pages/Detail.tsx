@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 
 import { cityList } from "@/state/common";
 
@@ -22,12 +23,22 @@ const Detail = () => {
   const city = cities.find((city) => city.id === Number(id));
 
   return (
-    <div>
+    <DetailContainer>
       <h1>Detail</h1>
       <p>ID: {id}</p>
       {city && <p>NAME: {city.name}</p>}
-    </div>
+    </DetailContainer>
   );
 };
+
+const DetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0 10em;
+  overflow: scroll;
+`;
 
 export default Detail;

@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Loading } from "@/components/common";
+import Header from "@/components/common/Header";
 import { PATH } from "@/constants";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -12,6 +13,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
+        <Header />
         <Routes>
           <Route path={PATH.HOME} element={<Home />} />
           <Route path={`${PATH.DETAIL}/:id`} element={<Detail />} />
