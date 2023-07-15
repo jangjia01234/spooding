@@ -1,30 +1,39 @@
-import { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import logo from "/thumbnail.png";
-import { cityList } from "@/state/common";
+import { cityList, searchInput } from "@/state/common";
 
 const Header = () => {
-  const [searchInput, setSearchInput] = useState<string>("");
-  const [cities, setCities] = useRecoilState<any[]>(cityList as any);
+  const [cities, setCities] = useRecoilState<any[]>(cityList);
+  const [input, setInput] = useRecoilState<string>(searchInput);
+  const [filteredCities, setFilteredCities] = useRecoilState<any[]>(cityList);
 
-  const getValue = (e) => {
+  const getValue = (e: any) => {
     if (e.target.value) {
-      setSearchInput(e.target.value.toLowerCase());
-      console.log("input:", searchInput);
+      setInput(e.target.value.toLowerCase());
+      console.log("input:", input);
     }
   };
 
-  const showSearchResult = () => {
-    if (searchInput) {
-      const searchResult = cities.filter((city) => city.name.toLowerCase().includes(searchInput));
-      console.log("result:", searchResult);
+  const searchResult = cities.filter((city) => city.name.toLowerCase().includes(input));
+  console.log("searchResult:", searchResult);
+
+  const showSearchResult = (e: any) => {
+    e.preventDefault();
+
+    if (input && filtered.length > 0) {
+      setFilteredCities(filtered);
     } else {
       console.log("검색 결과가 없습니다.");
     }
   };
+
+  const filtered = cities.filter((items) => {
+    return items.name.toLowerCase().includes(input);
+  });
 
   return (
     <HeaderContainer>
@@ -32,9 +41,9 @@ const Header = () => {
         <LogoImage src={logo} alt='logo' />
         <LogoText>Logo Text</LogoText>
       </GoToHome>
-      <SearchContainer>
-        <SearchInput placeholder='도시를 검색해주세요.' onChange={getValue} />
-        <SearchButton type='button' onClick={showSearchResult}>
+      <SearchContainer onSubmit={showSearchResult}>
+        <SearchInput type='text' placeholder='도시를 검색해주세요.' onChange={getValue} />
+        <SearchButton type='submit' onClick={showSearchResult}>
           검색
         </SearchButton>
       </SearchContainer>
@@ -51,8 +60,9 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: 38px;
   padding: 0.8em;
-  border-bottom: 1.5px solid #ececec;
+  border-bottom: 1.5px solid #f7f8fa;
   font-weight: bold;
+  background-color: white;
   z-index: 99;
   opacity: 0.95;
 `;
@@ -71,7 +81,7 @@ const LogoText = styled.span`
   margin-left: 8px;
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   display: flex;
   margin-right: 5em;
   width: 30em;
@@ -96,4 +106,4 @@ const SearchButton = styled.button`
   background-color: #ececec;
 `;
 
-export default Header;
+export default React.memo(Header);

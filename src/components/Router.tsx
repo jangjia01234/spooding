@@ -12,8 +12,8 @@ const Error404 = lazy(() => import("@/pages/Error404"));
 const Router = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Suspense fallback={<Loading />}>
-        <Header />
         <Routes>
           <Route path={PATH.HOME} element={<Home />} />
           <Route path={`${PATH.DETAIL}/:id`} element={<Detail />} />

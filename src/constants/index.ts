@@ -10,7 +10,7 @@ export const METHOD = {
 export const PATH = Object.freeze({
   HOME: "/",
   DETAIL: "/:id",
-  ERROR: "/error",
+  NOT_FOUND: "/error404",
   ALL: "*",
 });
 
