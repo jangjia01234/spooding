@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 const Loading = () => {
-  return <LoadingContainer>Loading...</LoadingContainer>;
+  return (
+    <LoadingContainer>
+      <LoadingGif src='/images/loading_spinner.gif' />
+    </LoadingContainer>
+  );
 };
 
 const LoadingContainer = styled.div`
@@ -12,5 +16,7 @@ const LoadingContainer = styled.div`
   font-size: 2em;
   font-weight: 600;
 `;
+
+const LoadingGif = styled.img``;
 
 export default Loading;

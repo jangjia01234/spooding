@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import { cityList, weatherInfo } from "@/state/common";
 
+import LazyImage from "../lazyImages";
+
 const Detail = () => {
   const { id } = useParams();
   const cities = useRecoilValue<any[]>(cityList);
@@ -40,12 +42,9 @@ const Detail = () => {
           <Title>{setKoreanTime(weather.dt)}</Title>
           <CityName>지금 {weather.name} 의 날씨예요</CityName>
           <CityTemperature>{weather.main.temp}°C</CityTemperature>
-          <img
-            alt='weather icon'
-            src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-          />
-          <Title>{weather.weather[0].description}</Title>
+          <LazyImage src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
 
+          <Title>{weather.weather[0].description}</Title>
           <p>국가: {weather.sys.country}</p>
           <p>바람: {weather.wind.speed}m/s</p>
           <p>습도: {weather.main.humidity}%</p>

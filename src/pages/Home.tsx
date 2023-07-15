@@ -7,6 +7,8 @@ import fetcher from "@/api/fetcher";
 import { PATH } from "@/constants";
 import { cityList, searchSession, weatherInfo } from "@/state/common";
 
+import LazyImage from "../lazyImages";
+
 const CityListComponent = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList);
   const searchResult = useRecoilValue<any[]>(searchSession);
@@ -95,8 +97,7 @@ const Home = () => {
               <>
                 <TemperatureTitle>{weather.main.temp}°C</TemperatureTitle>
                 <WeatherTitle>{weather.weather[0].description}</WeatherTitle>
-                <img
-                  alt='weather icon'
+                <LazyImage
                   src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                 />
               </>
