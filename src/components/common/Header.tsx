@@ -1,9 +1,31 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import logo from "/thumbnail.png";
+import { cityList } from "@/state/common";
 
 const Header = () => {
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [cities, setCities] = useRecoilState<any[]>(cityList as any);
+
+  const getValue = (e) => {
+    if (e.target.value) {
+      setSearchInput(e.target.value.toLowerCase());
+      console.log("input:", searchInput);
+    }
+  };
+
+  const showSearchResult = () => {
+    if (searchInput) {
+      const searchResult = cities.filter((city) => city.name.toLowerCase().includes(searchInput));
+      console.log("result:", searchResult);
+    } else {
+      console.log("검색 결과가 없습니다.");
+    }
+  };
+
   return (
     <HeaderContainer>
       <GoToHome to={"/"}>
@@ -11,8 +33,10 @@ const Header = () => {
         <LogoText>Logo Text</LogoText>
       </GoToHome>
       <SearchContainer>
-        <SearchInput placeholder='도시를 검색해주세요.' />
-        <SearchButton type='button'>검색</SearchButton>
+        <SearchInput placeholder='도시를 검색해주세요.' onChange={getValue} />
+        <SearchButton type='button' onClick={showSearchResult}>
+          검색
+        </SearchButton>
       </SearchContainer>
     </HeaderContainer>
   );
