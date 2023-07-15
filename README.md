@@ -1,6 +1,6 @@
 ## Spooding
 
-![spooding_thumbnail](https://github.com/jangjia01234/spooding/assets/71865277/7fccfd33-9b13-4656-83fd-3a7113fd63f5)
+![Spooding_thumbnail_wide](https://github.com/jangjia01234/spooding/assets/71865277/13b16902-bee5-47db-b76d-4e6862258e83)
 
 <br/><br/>
 
