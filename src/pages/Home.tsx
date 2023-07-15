@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import fetcher from "@/api/fetcher";
 import { PATH } from "@/constants";
-import { cityList, searchSession } from "@/state/common";
+import { cityList, searchSession, weatherInfo } from "@/state/common";
 
 const CityListComponent = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList);
@@ -32,7 +32,7 @@ const CityListComponent = () => {
 const Home = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList as any);
   const [randomCity, setRandomCity] = useState<any | null>(null);
-  const [weather, setWeather] = useState<any | null>(null);
+  const [weather, setWeather] = useRecoilState(weatherInfo);
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -104,6 +104,7 @@ const Home = () => {
           </>
         )}
       </TitleContainer>
+      <CityListTitle>다양한 도시의 날씨를 살펴보세요</CityListTitle>
       <CityListComponent />
     </HomeContainer>
   );
@@ -145,6 +146,14 @@ const TemperatureTitle = styled.h2`
 `;
 
 const WeatherTitle = styled.h4``;
+
+const CityListTitle = styled.h2`
+  margin: 1em 0 2em 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+`;
 
 const CityListContainer = styled.div`
   display: grid;
