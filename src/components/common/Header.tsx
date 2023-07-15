@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import logo from "/icons/spooding_icon.png";
+import logo from "/icons/spooding_icon_black.png";
 import { cityList, searchInput, searchSession } from "@/state/common";
 
 const Header = () => {

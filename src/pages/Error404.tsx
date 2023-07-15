@@ -23,8 +23,10 @@ const ErrorContainer = styled.h1`
 `;
 
 const ErrorTitle = styled.h1`
-  font-size: 2em;
+  margin-bottom: 0.8em;
+  font-size: 3em;
   font-weight: bold;
+  color: white;
   text-align: center;
 `;
 

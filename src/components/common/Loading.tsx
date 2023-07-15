@@ -15,6 +15,7 @@ const LoadingContainer = styled.div`
   height: 100vh;
   font-size: 2em;
   font-weight: 600;
+  color: white;
 `;
 
 const LoadingGif = styled.img``;
