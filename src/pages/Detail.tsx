@@ -48,7 +48,10 @@ const Detail = () => {
             <CityWeatherDescription>{weather.weather[0].description}</CityWeatherDescription>
           </MainInfoSection>
           <SubInfoSection>
-            <SubInfoCard>{weather.weather[0].description}</SubInfoCard>
+            <SubInfoCard>
+              날씨 <br />
+              {weather.weather[0].description}
+            </SubInfoCard>
             <SubInfoCard>
               국가 <br /> {weather.sys.country}
             </SubInfoCard>
