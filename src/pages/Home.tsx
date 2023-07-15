@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import fetcher from "@/api/fetcher";
 import { PATH } from "@/constants";
-import { cityList } from "@/state/common";
+import { cityList, searchSession } from "@/state/common";
 
 const CityListComponent = () => {
-  const [cities, setCities] = useRecoilState<any[]>(cityList as any);
+  const [cities, setCities] = useRecoilState<any[]>(cityList);
+  const searchResult = useRecoilValue<any[]>(searchSession);
+
+  console.log("도시 목록:", cities);
+  console.log("검색 결과:", searchResult);
 
   return (
     <CityListContainer>
-      {cities && (
-        <>
-          {cities.length > 0 ? (
-            cities.map((city: any, id: number) => (
-              <Link key={id} to={`${PATH.DETAIL}/${city.id}`}>
-                <CityListBox>{city.name}</CityListBox>
-              </Link>
-            ))
-          ) : (
-            <div>데이터가 없습니다.</div>
-          )}
-        </>
+      {cities.length > 0 ? (
+        cities.map((city: any, id: number) => (
+          <Link key={id} to={`${PATH.DETAIL}/${city.id}`}>
+            <CityListBox>{city.name}</CityListBox>
+          </Link>
+        ))
+      ) : (
+        <div>데이터가 없습니다.</div>
       )}
     </CityListContainer>
   );
@@ -68,7 +68,7 @@ const Home = () => {
     getCityList();
   }, []);
 
-  // MARK: 도시 리스트 및 랜덤 도시 받아오기
+  // MARK: 랜덤 도시 받아오기
   useEffect(() => {
     const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)];
     setRandomCity(selectedRandomCity || null);
@@ -114,9 +114,9 @@ const HomeContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   padding: 0 10em;
-  background-color: #f7f8fa;
+  background-color: white;
   overflow: scroll;
 `;
 
@@ -161,13 +161,14 @@ const CityListBox = styled.div`
   height: 100px;
   padding: 1em;
   font-size: 1.2em;
-  background-color: white;
+  text-align: center;
+  background-color: #f2f4f6;
   border-radius: 14px;
   cursor: pointer;
 
   &:hover {
-    background-color: #fff0eb;
-    color: #df5f3c;
+    background-color: #fdf3e3;
+    color: #d58d3f;
   }
 `;
 

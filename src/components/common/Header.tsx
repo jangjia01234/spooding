@@ -1,33 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import logo from "/thumbnail.png";
-import { cityList, searchInput } from "@/state/common";
+import logo from "/icons/spooding_icon.png";
+import { cityList, searchInput, searchSession } from "@/state/common";
 
 const Header = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList);
   const [input, setInput] = useRecoilState<string>(searchInput);
   const [filteredCities, setFilteredCities] = useRecoilState<any[]>(cityList);
+  const searchResult = useRecoilValue<any[]>(searchSession);
 
+  // MARK: 검색 기능
   const getValue = (e: any) => {
     if (e.target.value) {
       setInput(e.target.value.toLowerCase());
-      console.log("input:", input);
-    }
-  };
-
-  const searchResult = cities.filter((city) => city.name.toLowerCase().includes(input));
-  console.log("searchResult:", searchResult);
-
-  const showSearchResult = (e: any) => {
-    e.preventDefault();
-
-    if (input && filtered.length > 0) {
-      setFilteredCities(filtered);
-    } else {
-      console.log("검색 결과가 없습니다.");
     }
   };
 
@@ -35,16 +23,39 @@ const Header = () => {
     return items.name.toLowerCase().includes(input);
   });
 
+  const showSearchResult = (e: any) => {
+    e.preventDefault();
+
+    if (input && filtered.length > 0) {
+      setFilteredCities(filtered);
+      window.sessionStorage.setItem("resultCities", JSON.stringify(filtered));
+    } else {
+      console.log("검색 결과가 없습니다.");
+    }
+  };
+
+  // MARK: 새로고침해도 검색결과 유지하는 기능
+  const searchResultSession = window.sessionStorage.getItem("resultCities");
+  const searchResultSessionJSON = JSON.parse(searchResultSession || "[]");
+
+  useEffect(() => {
+    setFilteredCities(searchResultSessionJSON);
+  }, []);
+
   return (
     <HeaderContainer>
       <GoToHome to={"/"}>
         <LogoImage src={logo} alt='logo' />
-        <LogoText>Logo Text</LogoText>
+        <LogoText>Spooding</LogoText>
       </GoToHome>
       <SearchContainer onSubmit={showSearchResult}>
-        <SearchInput type='text' placeholder='도시를 검색해주세요.' onChange={getValue} />
+        <SearchInput
+          type='text'
+          placeholder='도시명을 입력해 날씨, 기온, 습도 등을 알아보세요.'
+          onChange={getValue}
+        />
         <SearchButton type='submit' onClick={showSearchResult}>
-          검색
+          <i className='fa-solid fa-magnifying-glass'></i>
         </SearchButton>
       </SearchContainer>
     </HeaderContainer>
@@ -59,7 +70,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   width: 100%;
   height: 38px;
-  padding: 0.8em;
+  padding: 1em 5em;
   border-bottom: 1.5px solid #f7f8fa;
   font-weight: bold;
   background-color: white;
@@ -68,15 +79,16 @@ const HeaderContainer = styled.header`
 `;
 
 const GoToHome = styled(Link)`
+  display: flex;
+  align-items: center;
   text-decoration: none;
 `;
 
 const LogoImage = styled.img`
-  height: 30px;
+  height: 20px;
 `;
 
 const LogoText = styled.span`
-  position: relative;
   bottom: 8px;
   margin-left: 8px;
 `;
@@ -89,21 +101,30 @@ const SearchContainer = styled.form`
 `;
 
 const SearchInput = styled.input`
-  width: 85%;
+  width: 80%;
   height: 100%;
-  padding: 0 1.5em;
-  border: none;
-  border-radius: 0.4em;
-  background-color: #ececec;
+  padding: 0 2em;
+  border: 2px solid black;
+  border-radius: 10em;
+
+  &::placeholder {
+    color: #a6acb4;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const SearchButton = styled.button`
-  width: 15%;
-  height: 100%;
+  position: absolute;
+  right: 13.5em;
+  bottom: 30%;
   margin-left: 1em;
-  border: none;
+  font-size: 1em;
+  color: #a6acb4;
   border-radius: 0.4em;
-  background-color: #ececec;
+  outline: none;
 `;
 
 export default React.memo(Header);
