@@ -6,9 +6,12 @@ import { media } from "@/styles/theme";
 export const GlobalStyle = createGlobalStyle`
     ${reset}
     html {
+        margin-top: 67px;
         font-size: 16px;
         font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
         font-display: fallback;
+        background-color: #1D1D1D;
+        color: #1D1D1D;
     }
     ::-webkit-scrollbar {
         display: none;

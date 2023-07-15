@@ -70,12 +70,11 @@ const HeaderContainer = styled.header`
   align-items: center;
   width: 100%;
   height: 38px;
-  padding: 1em 5em;
-  border-bottom: 1.5px solid #f7f8fa;
+  padding: 15px 40px;
+  border-bottom: 3.5px solid #1d1d1d;
   font-weight: bold;
-  background-color: white;
+  background-color: #8559e0;
   z-index: 99;
-  opacity: 0.95;
 `;
 
 const GoToHome = styled(Link)`
@@ -101,14 +100,15 @@ const SearchContainer = styled.form`
 `;
 
 const SearchInput = styled.input`
-  width: 80%;
+  width: 72%;
   height: 100%;
   padding: 0 2em;
-  border: 2px solid black;
+  border: 2.5px solid #1d1d1d;
   border-radius: 10em;
+  background-color: transparent;
 
   &::placeholder {
-    color: #a6acb4;
+    color: #1d1d1d88;
   }
 
   &:focus {
@@ -122,7 +122,7 @@ const SearchButton = styled.button`
   bottom: 30%;
   margin-left: 1em;
   font-size: 1em;
-  color: #a6acb4;
+  color: #1d1d1d;
   border-radius: 0.4em;
   outline: none;
 `;

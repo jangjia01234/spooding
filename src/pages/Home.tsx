@@ -94,18 +94,21 @@ const Home = () => {
               날씨는?
             </TodaysWeatherTitle>
             {weather && (
-              <>
+              <RandomWeatherInfo>
                 <TemperatureTitle>{weather.main.temp}°C</TemperatureTitle>
                 <WeatherTitle>{weather.weather[0].description}</WeatherTitle>
                 <LazyImage
                   src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                 />
-              </>
+              </RandomWeatherInfo>
             )}
           </>
         )}
       </TitleContainer>
-      <CityListTitle>다양한 도시의 날씨를 살펴보세요</CityListTitle>
+      <CityListTitleContainer>
+        <CityListTitle>다양한 도시의 날씨를 살펴보세요</CityListTitle>
+        <i className='fa-solid fa-chevron-down'></i>
+      </CityListTitleContainer>
       <CityListComponent />
     </HomeContainer>
   );
@@ -116,9 +119,8 @@ const HomeContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
-  padding: 0 10em;
-  background-color: white;
+  background-color: #1d1d1d;
+  color: white;
   overflow: scroll;
 `;
 
@@ -140,16 +142,39 @@ const StyledLink = styled(Link)`
   text-decoration: underline;
 `;
 
-const TemperatureTitle = styled.h2`
-  margin: 0.5em 0;
-  font-size: 2.5em;
-  font-weight: 700;
+const RandomWeatherInfo = styled.div`
+  margin-bottom: 7em;
 `;
 
-const WeatherTitle = styled.h4``;
+const TemperatureTitle = styled.h2`
+  margin: 0.5em 0;
+  font-size: 3em;
+  font-weight: 800;
+  font-family: "Bagel Fat One", cursive;
+  color: #e2765a;
+`;
+
+const WeatherTitle = styled.h4`
+  margin: 0.5em 0;
+`;
+
+const CityListTitleContainer = styled.div`
+  position: absolute;
+  bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    margin-bottom: 1em;
+    font-size: 1.6em;
+    opacity: 0.5;
+  }
+`;
 
 const CityListTitle = styled.h2`
-  margin: 1em 0 2em 0;
+  margin: 1em 0;
   font-size: 1.2em;
   font-weight: 600;
   text-align: center;
@@ -159,7 +184,6 @@ const CityListTitle = styled.h2`
 const CityListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1em;
   height: 100%;
   overflow: scroll;
 `;
@@ -168,17 +192,18 @@ const CityListBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 150px;
   padding: 1em;
   font-size: 1.2em;
+  font-weight: 600;
   text-align: center;
-  background-color: #f2f4f6;
-  border-radius: 14px;
+  color: #1d1d1d;
+  background-color: #d4d4d4;
+  border: 2px solid #1d1d1d;
   cursor: pointer;
 
   &:hover {
-    background-color: #fdf3e3;
-    color: #d58d3f;
+    background-color: #e2765a;
   }
 `;
 
