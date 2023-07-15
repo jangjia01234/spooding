@@ -1,6 +1,6 @@
 ## Spooding
 
-![iMac 2021 - Purple](https://github.com/jangjia01234/spooding/assets/71865277/005056fd-3a28-4c85-8670-d4db12ff8759)
+![spooding_thumbnail](https://github.com/jangjia01234/spooding/assets/71865277/7fccfd33-9b13-4656-83fd-3a7113fd63f5)
 
 <br/><br/>
 
