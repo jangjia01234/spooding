@@ -36,6 +36,9 @@ const SearchHistory = () => {
                   <RemoveButton onClick={() => removeSearchHistory(history.id)}>삭제</RemoveButton>
                 </KeywordContainer>
               ))}
+            {searchHistoryList.length >= 0 && (
+              <NoHistoryText>최근 검색 기록이 없습니다.</NoHistoryText>
+            )}
           </HistoryListContainer>
         </HistoryContainer>
       )}
@@ -92,6 +95,12 @@ const RemoveButton = styled.button`
   background-color: #1d1d1d;
   border-radius: 0.4em;
   outline: none;
+`;
+
+const NoHistoryText = styled.span`
+  font-size: 0.9em;
+  font-weight: 500;
+  opacity: 0.6;
 `;
 
 export default SearchHistory;

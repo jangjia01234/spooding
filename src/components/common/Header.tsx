@@ -43,10 +43,7 @@ const Header = () => {
     }
   };
 
-  const showSearchHistory = () => {
-    if (searchHistoryList.length > 0) setIsSearchHistoryOpen(true);
-    else setIsSearchHistoryOpen(false);
-  };
+  const showSearchHistory = () => setIsSearchHistoryOpen(true);
 
   // MARK: 새로고침해도 검색결과 유지하는 기능
   useEffect(() => {
@@ -134,7 +131,7 @@ const SearchInput = styled.input`
   background-color: #a385df;
 
   &::placeholder {
-    color: #1d1d1d88;
+    color: #1d1d1d52;
   }
 
   &:focus {
