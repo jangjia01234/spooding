@@ -6,6 +6,7 @@ import styled from "styled-components";
 import GetSubInfoData from "@/constants/subInfoData";
 import { cityList, weatherInfo } from "@/state/common";
 import variables from "@/styles/variables";
+import { setKoreanTime } from "@/utils/timeUtils";
 
 import LazyImage from "../lazyImages";
 
@@ -25,14 +26,6 @@ const Detail = () => {
       navigate("/error404");
     }
   }, [id]);
-
-  const setKoreanTime = (time: number) => {
-    const date = new Date(time * 1000);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    return `${hours}분 ${minutes}시`;
-  };
 
   return (
     <DetailContainer>

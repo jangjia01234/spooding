@@ -1,17 +1,10 @@
 import { useRecoilValue } from "recoil";
 
 import { weatherInfo } from "@/state/common";
+import { setKoreanTime } from "@/utils/timeUtils";
 
 export const GetSubInfoData = () => {
   const weather = useRecoilValue(weatherInfo);
-
-  const setKoreanTime = (time: number) => {
-    const date = new Date(time * 1000);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
-    return `${hours}시 ${minutes}분`;
-  };
 
   const subInfoData = [
     { label: "날씨", value: weather.weather[0].description },
