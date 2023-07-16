@@ -15,7 +15,7 @@ const Home = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList as any);
   const [randomCity, setRandomCity] = useState<any | null>(null);
   const [weather, setWeather] = useRecoilState(weatherInfo);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -105,10 +105,6 @@ const Home = () => {
   );
 };
 
-interface TemperatureTitleProps {
-  loading: boolean;
-}
-
 const HomeContainer = styled.div`
   ${variables.flex("column", "center", "center")}
   background-color: ${({ theme }) => theme.color.black};
@@ -137,11 +133,11 @@ const RandomWeatherInfo = styled.div`
   margin-bottom: 7em;
 `;
 
-const TemperatureTitle = styled.h2<TemperatureTitleProps>`
+const TemperatureTitle = styled.h2`
   ${variables.fontStyle("3em", 800)}
   margin: 0.5em 0;
-  color: ${({ theme, loading }) => (loading ? theme.color.white : theme.color.gray)};
-  font-family: ${({ loading }) => (loading ? "Pretendard" : "'Bagel Fat One', cursive")};
+  color: ${({ theme }) => theme.color.orange};
+  font-family: "Bagel Fat One", cursive;
 `;
 
 const WeatherTitle = styled.h4`
