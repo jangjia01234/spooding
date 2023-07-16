@@ -7,6 +7,12 @@ const SearchHistory = () => {
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
   const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
 
+  const removeSearchHistory = (id: number) => {
+    const updatedHistoryList = searchHistoryList.filter((history) => history.id !== id);
+    setSearchHistoryList(updatedHistoryList);
+    window.sessionStorage.setItem("searchHistory", JSON.stringify(updatedHistoryList));
+  };
+
   return (
     <>
       {isSearchHistoryOpen && (
@@ -27,7 +33,7 @@ const SearchHistory = () => {
               searchHistoryList.map((history) => (
                 <KeywordContainer key={history.id}>
                   <Keyword>{history.keyword}</Keyword>
-                  <RemoveButton>삭제</RemoveButton>
+                  <RemoveButton onClick={() => removeSearchHistory(history.id)}>삭제</RemoveButton>
                 </KeywordContainer>
               ))}
           </HistoryListContainer>
