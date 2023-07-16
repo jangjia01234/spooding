@@ -15,6 +15,7 @@ const Home = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList as any);
   const [randomCity, setRandomCity] = useState<any | null>(null);
   const [weather, setWeather] = useRecoilState(weatherInfo);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -30,12 +31,22 @@ const Home = () => {
         const { lat, lon } = randomCity.coord;
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=kr&units=metric`;
 
-        const res: any = await fetcher("get", url, {});
-        if (res.data.length === 0) console.log("no data");
-        else setWeather(res.data);
+        const cachedWeather = localStorage.getItem(randomCity.id.toString());
+        if (cachedWeather) {
+          setWeather(JSON.parse(cachedWeather));
+        } else {
+          const res: any = await fetcher("get", url, {});
+          if (res.data.length === 0) {
+            console.log("no data");
+          } else {
+            console.log("Received Weather from API:", res.data);
+            setWeather(res.data);
+            localStorage.setItem(randomCity.id.toString(), JSON.stringify(res.data));
+          }
+        }
       }
-    } catch {
-      console.error("날씨 정보를 받아오지 못했습니다.");
+    } catch (error) {
+      console.error("날씨 정보를 받아오지 못했습니다.", error);
     }
   };
 
@@ -49,13 +60,22 @@ const Home = () => {
   }, [cities]);
 
   useEffect(() => {
-    if (randomCity) getWeather();
+    if (randomCity) {
+      setLoading(true);
+      getWeather();
+    }
   }, [randomCity]);
+
+  useEffect(() => {
+    if (loading) {
+      setLoading(false);
+    }
+  }, [loading]);
 
   return (
     <HomeContainer>
       <TitleContainer>
-        {(weather || randomCity) && (
+        {!loading && (weather || randomCity) ? (
           <>
             <TodaysWeatherTitle>
               오늘
@@ -72,7 +92,9 @@ const Home = () => {
               </RandomWeatherInfo>
             )}
           </>
-        )}
+        ) : !loading ? (
+          <LoadingText>로딩중...</LoadingText>
+        ) : null}
       </TitleContainer>
       <CityListTitleContainer>
         <CityListTitle>다양한 도시의 날씨를 살펴보세요</CityListTitle>
@@ -82,6 +104,10 @@ const Home = () => {
     </HomeContainer>
   );
 };
+
+interface TemperatureTitleProps {
+  loading: boolean;
+}
 
 const HomeContainer = styled.div`
   ${variables.flex("column", "center", "center")}
@@ -111,15 +137,23 @@ const RandomWeatherInfo = styled.div`
   margin-bottom: 7em;
 `;
 
-const TemperatureTitle = styled.h2`
+const TemperatureTitle = styled.h2<TemperatureTitleProps>`
   ${variables.fontStyle("3em", 800)}
   margin: 0.5em 0;
-  color: ${({ theme }) => theme.color.orange};
-  font-family: "Bagel Fat One", cursive;
+  color: ${({ theme, loading }) => (loading ? theme.color.white : theme.color.gray)};
+  font-family: ${({ loading }) => (loading ? "Pretendard" : "'Bagel Fat One', cursive")};
 `;
 
 const WeatherTitle = styled.h4`
   margin: 0.5em 0;
+`;
+
+const LoadingText = styled.h2`
+  ${variables.flex("row", "center", "center")}
+  ${variables.fontStyle("1.2em", 600)}
+  ${variables.widthHeight("100vw", "10em")}
+  color: ${({ theme }) => theme.color.white};
+  opacity: 0.4;
 `;
 
 const CityListTitleContainer = styled.div`

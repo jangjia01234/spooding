@@ -88,8 +88,8 @@ const getWeather = async () => {
       if (res.data.length === 0) console.log("no data");
       else setWeather(res.data);
     }
-  } catch {
-    console.error("날씨 정보를 받아오지 못했습니다.");
+  } catch (error) {
+    console.error("날씨 정보를 받아오지 못했습니다.", error);
   }
 };
 

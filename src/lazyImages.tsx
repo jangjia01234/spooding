@@ -2,6 +2,7 @@ import * as React from "react";
 
 interface ILazyImage {
   src: string;
+  onLoad?: () => void;
 }
 
 const LazyImage: React.FC<ILazyImage> = ({ src }): JSX.Element => {
