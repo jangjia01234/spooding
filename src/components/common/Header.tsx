@@ -44,6 +44,14 @@ const Header = () => {
 
   // MARK: 새로고침해도 검색결과 유지하는 기능
   useEffect(() => {
+    const searchHistorySession = window.sessionStorage.getItem("searchHistory");
+    const searchHistorySessionJSON = JSON.parse(searchHistorySession || "[]");
+    if (searchHistorySessionJSON.length > 0) {
+      setSearchHistoryList(searchHistorySessionJSON);
+    }
+  }, [setSearchHistoryList]);
+
+  useEffect(() => {
     const searchHistorySession = window.sessionStorage.getItem("resultCities");
     const searchHistorySessionJSON = JSON.parse(searchHistorySession || "[]");
     if (searchHistorySessionJSON.length > 0) setFilteredCities(searchHistorySessionJSON);
