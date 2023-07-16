@@ -1,51 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import logo from "/icons/spooding_icon_black.png";
-import { cityList, filteredCityList, isOpen, searchHistory, searchInput } from "@/state/common";
+import { cityList, filteredCityList, searchHistory } from "@/state/common";
 
+import SearchBar from "../SearchBar";
 import SearchHistory from "./SearchHistory";
 
 const Header = () => {
   const cities = useRecoilValue<any[]>(cityList);
-  const [input, setInput] = useRecoilState<string>(searchInput);
   const [filteredCities, setFilteredCities] = useRecoilState<any[]>(filteredCityList);
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
-  const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-  // MARK: 검색 및 검색어 저장 기능
-  const setValue = (e: any) => {
-    const value = e.target.value.toLowerCase();
-    setInput(value);
-  };
-
-  const handleButtonClick = () => setIsButtonClicked(true);
-
-  const showSearchResult = (e: any) => {
-    e.preventDefault();
-
-    if (input) {
-      const result = cities.filter((city) => city.name.toLowerCase().includes(input));
-      setFilteredCities(result);
-      window.sessionStorage.setItem("resultCities", JSON.stringify(result));
-
-      if (isButtonClicked) {
-        const newHistory = [{ id: Date.now(), keyword: input }, ...searchHistoryList];
-        setSearchHistoryList(newHistory);
-        window.sessionStorage.setItem("searchHistory", JSON.stringify(newHistory));
-        setIsButtonClicked(false);
-      }
-    } else {
-      console.log("검색 결과가 없습니다.");
-    }
-  };
-
-  const showSearchHistory = () => setIsSearchHistoryOpen(true);
-
-  // MARK: 새로고침해도 검색결과 유지하는 기능
   useEffect(() => {
     const searchHistorySession = window.sessionStorage.getItem("searchHistory");
     const searchHistorySessionJSON = JSON.parse(searchHistorySession || "[]");
@@ -67,17 +35,7 @@ const Header = () => {
         <LogoImage src={logo} alt='spooding logo' />
         <LogoText>Spooding</LogoText>
       </GoToHome>
-      <SearchContainer onSubmit={showSearchResult}>
-        <SearchInput
-          type='text'
-          placeholder='도시명을 입력해 날씨, 기온, 습도 등을 알아보세요.'
-          onChange={setValue}
-          onClick={showSearchHistory}
-        />
-        <SearchButton type='submit' onClick={handleButtonClick}>
-          <i className='fa-solid fa-magnifying-glass'></i>
-        </SearchButton>
-      </SearchContainer>
+      <SearchBar />
       <SearchHistory />
     </HeaderContainer>
   );
@@ -111,43 +69,6 @@ const LogoImage = styled.img`
 const LogoText = styled.span`
   bottom: 8px;
   margin-left: 8px;
-`;
-
-const SearchContainer = styled.form`
-  display: flex;
-  margin-right: 5em;
-  width: 30em;
-  height: 100%;
-`;
-
-const SearchInput = styled.input`
-  position: absolute;
-  right: 13.5em;
-  width: 24em;
-  height: 3em;
-  padding: 0 2em;
-  border: 2.5px solid #1d1d1d;
-  border-radius: 10em;
-  background-color: #a385df;
-
-  &::placeholder {
-    color: #1d1d1d52;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const SearchButton = styled.button`
-  position: absolute;
-  right: 12.5em;
-  bottom: 30%;
-  margin-left: 1em;
-  font-size: 1em;
-  color: #1d1d1d;
-  border-radius: 0.4em;
-  outline: none;
 `;
 
 export default React.memo(Header);
