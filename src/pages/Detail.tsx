@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { cityList, weatherInfo } from "@/state/common";
+import variables from "@/styles/variables";
 
 import LazyImage from "../lazyImages";
 
@@ -84,75 +85,59 @@ const Detail = () => {
 };
 
 const DetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${variables.flex("column", "center", "center")};
   height: 92vh;
   overflow: hidden;
 `;
 
 const WeatherInfoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${variables.flex("row", "center", "center")};
   height: 100%;
 `;
 
 const MainInfoSection = styled.div`
-  width: 30vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #1d1d1d;
-  color: white;
+  ${variables.flex("column", "center", "center")};
+  ${variables.widthHeight("30vw", "100%")};
+  background-color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.white};
 `;
 
 const SubInfoSection = styled(MainInfoSection)`
+  ${variables.widthHeight("70vw", "100%")};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 70vw;
-  height: 100%;
-  background-color: white;
-  color: #1d1d1d;
+  background-color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const SubInfoCard = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  ${variables.flex("row", "center", "center")};
+  ${variables.fontStyle("3em", 800)}
   padding: 0.8em;
   height: 100%;
-  font-size: 3em;
-  font-weight: 800;
-  border: 2px solid #1d1d1d;
-  background-color: #f5f5f5;
+  border: 2px solid ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.lightGray};
 
   &:hover {
-    background-color: #5fbd75;
+    background-color: ${({ theme }) => theme.color.green};
   }
 `;
 
 const CityTime = styled.h2`
-  font-size: 1em;
-  font-weight: 600;
+  ${variables.fontStyle("1em", 600)}
 `;
 
 const CityName = styled.h4`
-  font-size: 2em;
-  font-weight: 600;
+  ${variables.fontStyle("2em", 600)}
   margin-top: 0.2em;
 `;
 
 const CityTemperature = styled.h2`
+  ${variables.fontStyle("4.8em", 800)}
   margin: 0.2em 0;
-  font-size: 4.8em;
-  font-weight: 800;
+  color: ${({ theme }) => theme.color.orange};
   font-family: "Bagel Fat One", cursive;
-  color: #e2765a;
 `;
 
 const CityWeatherDescription = styled.h3`

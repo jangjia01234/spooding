@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { cityList, filteredCityList, isOpen, searchHistory, searchInput } from "@/state/common";
+import variables from "@/styles/variables";
 
 const SearchBar = () => {
   const cities = useRecoilValue<any[]>(cityList);
@@ -57,24 +58,22 @@ const SearchBar = () => {
 };
 
 const SearchContainer = styled.form`
+  ${variables.widthHeight("30em", "100%")}
   display: flex;
   margin-right: 5em;
-  width: 30em;
-  height: 100%;
 `;
 
 const SearchInput = styled.input`
-  position: absolute;
-  right: 13.5em;
-  width: 24em;
-  height: 3em;
+  ${variables.position("absolute", "null", "13.5em", "null", "null")}
+  ${variables.widthHeight("24em", "3em")}
   padding: 0 2em;
-  border: 2.5px solid #1d1d1d;
+  border: 2.5px solid ${({ theme }) => theme.color.black};
   border-radius: 10em;
-  background-color: #a385df;
+  background-color: ${({ theme }) => theme.color.lightPurple};
 
   &::placeholder {
-    color: #1d1d1d52;
+    color: ${({ theme }) => theme.color.black};
+    opacity: 0.4;
   }
 
   &:focus {
@@ -83,12 +82,10 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  position: absolute;
-  right: 12.5em;
-  bottom: 30%;
+  ${variables.position("absolute", "null", "12.5em", "30%", "null")}
   margin-left: 1em;
   font-size: 1em;
-  color: #1d1d1d;
+  color: ${({ theme }) => theme.color.black};
   border-radius: 0.4em;
   outline: none;
 `;

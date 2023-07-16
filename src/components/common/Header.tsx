@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import logo from "/icons/spooding_icon_black.png";
 import { cityList, filteredCityList, searchHistory } from "@/state/common";
+import variables from "@/styles/variables";
 
 import SearchBar from "../SearchBar";
 import SearchHistory from "./SearchHistory";
@@ -42,23 +43,18 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
-  position: fixed;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 38px;
+  ${variables.position("fixed", "0", "null", "null", "null")}
+  ${variables.flex("row", "space-between", "center")}
+  ${variables.widthHeight("100%", "38px")}
   padding: 15px 40px;
-  border-bottom: 3.5px solid #1d1d1d;
   font-weight: bold;
-  background-color: #8559e0;
+  border-bottom: 3.5px solid ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.purple};
   z-index: 99;
 `;
 
 const GoToHome = styled(Link)`
-  display: flex;
-  align-items: center;
+  ${variables.flex("row", "null", "center")}
   text-decoration: none;
 `;
 
@@ -67,7 +63,6 @@ const LogoImage = styled.img`
 `;
 
 const LogoText = styled.span`
-  bottom: 8px;
   margin-left: 8px;
 `;
 

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import fetcher from "@/api/fetcher";
 import { PATH } from "@/constants";
 import { cityList, filteredCityList, weatherInfo } from "@/state/common";
+import variables from "@/styles/variables";
 
 import LazyImage from "../lazyImages";
 
@@ -107,19 +108,15 @@ const Home = () => {
 };
 
 const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #1d1d1d;
-  color: white;
+  ${variables.flex("column", "center", "center")}
+  background-color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.white};
   overflow: scroll;
 `;
 
 const TitleContainer = styled.div`
+  ${variables.fontStyle("1.5em", 600)}
   margin: 6em 0 4em 0;
-  font-size: 1.5em;
-  font-weight: 600;
   text-align: center;
   white-space: nowrap;
 `;
@@ -139,11 +136,10 @@ const RandomWeatherInfo = styled.div`
 `;
 
 const TemperatureTitle = styled.h2`
+  ${variables.fontStyle("3em", 800)}
   margin: 0.5em 0;
-  font-size: 3em;
-  font-weight: 800;
+  color: ${({ theme }) => theme.color.orange};
   font-family: "Bagel Fat One", cursive;
-  color: #e2765a;
 `;
 
 const WeatherTitle = styled.h4`
@@ -151,12 +147,8 @@ const WeatherTitle = styled.h4`
 `;
 
 const CityListTitleContainer = styled.div`
-  position: absolute;
-  bottom: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${variables.position("absolute", "null", "null", "5%", "null")}
+  ${variables.flex("column", "center", "center")}
 
   i {
     margin-bottom: 1em;
@@ -166,9 +158,8 @@ const CityListTitleContainer = styled.div`
 `;
 
 const CityListTitle = styled.h2`
+  ${variables.fontStyle("1.2em", 600)}
   margin: 1em 0;
-  font-size: 1.2em;
-  font-weight: 600;
   text-align: center;
   white-space: nowrap;
 `;
@@ -181,21 +172,18 @@ const CityListContainer = styled.div`
 `;
 
 const CityListBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${variables.flex("row", "center", "center")}
+  ${variables.fontStyle("1.2em", 600)}
   height: 150px;
   padding: 1em;
-  font-size: 1.2em;
-  font-weight: 600;
+  color: ${({ theme }) => theme.color.black};
   text-align: center;
-  color: #1d1d1d;
-  background-color: #d4d4d4;
-  border: 2px solid #1d1d1d;
+  background-color: ${({ theme }) => theme.color.gray};
+  border: 2px solid ${({ theme }) => theme.color.black};
   cursor: pointer;
 
   &:hover {
-    background-color: #e2765a;
+    background-color: ${({ theme }) => theme.color.orange};
   }
 `;
 

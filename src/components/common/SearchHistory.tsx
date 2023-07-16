@@ -2,6 +2,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { isOpen, searchHistory } from "@/state/common";
+import variables from "@/styles/variables";
 
 const SearchHistory = () => {
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
@@ -18,7 +19,7 @@ const SearchHistory = () => {
       {isSearchHistoryOpen && (
         <HistoryContainer>
           <HistoryHeaderContainer>
-            <Title>최근 검색어</Title>
+            <h1>최근 검색어</h1>
             <CloseHistoryBox
               onClick={() => {
                 setIsSearchHistoryOpen(false);
@@ -33,7 +34,9 @@ const SearchHistory = () => {
               searchHistoryList.map((history) => (
                 <KeywordContainer key={history.id}>
                   <Keyword>{history.keyword}</Keyword>
-                  <RemoveButton onClick={() => removeSearchHistory(history.id)}>삭제</RemoveButton>
+                  <RemoveButton onClick={() => removeSearchHistory(history.id)}>
+                    <i className='fa-solid fa-x' />
+                  </RemoveButton>
                 </KeywordContainer>
               ))}
             {searchHistoryList.length === 0 && (
@@ -47,59 +50,52 @@ const SearchHistory = () => {
 };
 
 const HistoryContainer = styled.div`
-  position: absolute;
-  top: 2.5em;
-  right: 11.25em;
+  ${variables.position("absolute", "2.5em", "11.25em", "null", "null")}
   padding: 2em 1em 1em 1em;
   width: 21.65em;
-  background-color: #a385df;
+  background-color: ${({ theme }) => theme.color.lightPurple};
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
-  box-shadow: 0 0 0 2.5px #1d1d1d inset;
+  box-shadow: 0 0 0 2.5px ${({ theme }) => theme.color.black} inset;
   z-index: -1;
 `;
 
 const HistoryHeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  ${variables.flex("row", "space-between", "center")}
   margin-bottom: 1em;
 `;
 
-const Title = styled.h1``;
-
 const CloseHistoryBox = styled.button`
+  margin-top: 0.5em;
   font-size: 0.9em;
   border-radius: 0.4em;
-  outline: none;
 `;
 
 const HistoryListContainer = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: space-between;
+  ${variables.flex("column", "center", "space-between")}
 `;
 
 const KeywordContainer = styled.li`
+  ${variables.flex("row", "space-between", "null")}
+  width: 100%;
+  margin: 0.2em 0;
   overflow: hidden;
 `;
 
-const Keyword = styled.span``;
+const Keyword = styled.span`
+  ${variables.fontStyle("0.9em", 400)}
+`;
 
 const RemoveButton = styled.button`
   margin-left: 1em;
-  padding: 0.4em 0.8em;
   font-size: 0.9em;
-  color: white;
-  background-color: #1d1d1d;
+  color: ${({ theme }) => theme.color.black};
   border-radius: 0.4em;
   outline: none;
 `;
 
 const NoHistoryText = styled.span`
-  font-size: 0.9em;
-  font-weight: 500;
+  ${variables.fontStyle("0.9em", 500)}
   opacity: 0.6;
 `;
 

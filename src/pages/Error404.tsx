@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import variables from "@/styles/variables";
+
 const Error404 = () => {
   return (
     <ErrorContainer>
@@ -13,29 +15,24 @@ const Error404 = () => {
 };
 
 const ErrorContainer = styled.h1`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${variables.flex("column", "center", "center")}
   height: 80vh;
   margin: 4em;
   gap: 1em;
 `;
 
 const ErrorTitle = styled.h1`
+  ${variables.fontStyle("3em", 600)}
   margin-bottom: 0.8em;
-  font-size: 3em;
-  font-weight: bold;
-  color: white;
+  color: ${({ theme }) => theme.color.white};
   text-align: center;
 `;
 
 const BackToHome = styled.button`
+  ${variables.fontStyle("1.5em", 600)}
   padding: 0.4em 0.6em;
-  font-size: 1.5em;
-  font-weight: bold;
   border-radius: 10px;
-  background-color: #ececec;
+  background-color: ${({ theme }) => theme.color.lightGray}; ;
 `;
 
 export default Error404;

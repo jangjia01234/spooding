@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import variables from "@/styles/variables";
+
 const Loading = () => {
   return (
     <LoadingContainer>
@@ -9,13 +11,10 @@ const Loading = () => {
 };
 
 const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 2em;
-  font-weight: 600;
-  color: white;
+  ${variables.flex("row", "center", "center")}
+  ${variables.widthHeight("100%", "100vh")}
+  ${variables.fontStyle("2em", 600)}
+  color: ${({ theme }) => theme.color.white};
 `;
 
 const LoadingGif = styled.img``;
