@@ -36,7 +36,7 @@ const SearchHistory = () => {
                   <RemoveButton onClick={() => removeSearchHistory(history.id)}>삭제</RemoveButton>
                 </KeywordContainer>
               ))}
-            {searchHistoryList.length >= 0 && (
+            {searchHistoryList.length === 0 && (
               <NoHistoryText>최근 검색 기록이 없습니다.</NoHistoryText>
             )}
           </HistoryListContainer>
