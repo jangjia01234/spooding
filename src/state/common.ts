@@ -15,6 +15,11 @@ interface Session {
   value: string;
 }
 
+interface History {
+  id: number;
+  keyword: string;
+}
+
 export const cityList = atom<City[]>({
   key: "cityList",
   default: [],
@@ -32,6 +37,11 @@ export const searchInput = atom<string>({
 
 export const searchSession = atom<Session[]>({
   key: "searchSession",
+  default: [],
+});
+
+export const searchHistory = atom<History[]>({
+  key: "searchHistory",
   default: [],
 });
 
