@@ -34,7 +34,7 @@ const SearchHistory = () => {
             </KeywordContainer>
           ))
         ) : (
-          <NoHistoryText>최근 검색 기록이 없습니다.</NoHistoryText>
+          <NoHistoryText>검색 기록이 없습니다.</NoHistoryText>
         )}
       </HistoryListContainer>
     </HistoryContainer>
