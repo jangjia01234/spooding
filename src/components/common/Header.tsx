@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import logo from "/icons/spooding_icon_black.png";
-import { cityList, filteredCityList, searchHistory } from "@/state/common";
+import { cityList, filteredCityList, searchHistory } from "@/state/commonState";
 import variables from "@/styles/variables";
 
 import SearchBar from "../SearchBar";

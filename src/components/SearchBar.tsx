@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import { cityList, filteredCityList, isOpen, searchHistory, searchInput } from "@/state/common";
+import {
+  cityList,
+  filteredCityList,
+  isOpen,
+  searchHistory,
+  searchInput,
+} from "@/state/commonState";
 import variables from "@/styles/variables";
 
 const SearchBar = () => {

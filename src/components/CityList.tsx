@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { PATH } from "@/constants";
-import { filteredCityList } from "@/state/common";
+import { filteredCityList } from "@/state/commonState";
 import variables from "@/styles/variables";
 
 const CityList = () => {

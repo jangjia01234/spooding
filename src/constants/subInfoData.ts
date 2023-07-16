@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 
-import { weatherInfo } from "@/state/common";
+import { weatherInfo } from "@/state/commonState";
 import { setKoreanTime } from "@/utils/timeUtils";
 
 export const GetSubInfoData = () => {

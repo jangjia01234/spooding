@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import GetSubInfoData from "@/constants/subInfoData";
-import { cityList, weatherInfo } from "@/state/common";
+import { cityList, weatherInfo } from "@/state/commonState";
 import variables from "@/styles/variables";
 import { setKoreanTime } from "@/utils/timeUtils";
 

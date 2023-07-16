@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { isOpen, searchHistory } from "@/state/common";
+import { isOpen, searchHistory } from "@/state/commonState";
 import variables from "@/styles/variables";
 
 const SearchHistory = () => {

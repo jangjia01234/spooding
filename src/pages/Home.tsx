@@ -6,7 +6,7 @@ import styled from "styled-components";
 import fetcher from "@/api/fetcher";
 import CityList from "@/components/CityList";
 import { PATH } from "@/constants";
-import { cityList, weatherInfo } from "@/state/common";
+import { cityList, weatherInfo } from "@/state/commonState";
 import variables from "@/styles/variables";
 
 import LazyImage from "../lazyImages";
