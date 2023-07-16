@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
+import GetSubInfoData from "@/constants/subInfoData";
 import { cityList, weatherInfo } from "@/state/common";
 import variables from "@/styles/variables";
 
@@ -10,15 +11,15 @@ import LazyImage from "../lazyImages";
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const cities = useRecoilValue<any[]>(cityList);
   const weather = useRecoilValue(weatherInfo);
-
-  const navigate = useNavigate();
+  const subInfoData = GetSubInfoData();
 
   const city = cities.find((city) => city.id === Number(id));
 
   useEffect(() => {
-    console.log("ID:", id);
     if (!city) {
       console.error("존재하지 않는 도시입니다.");
       navigate("/error404");
@@ -49,34 +50,12 @@ const Detail = () => {
             <CityWeatherDescription>{weather.weather[0].description}</CityWeatherDescription>
           </MainInfoSection>
           <SubInfoSection>
-            <SubInfoCard>
-              날씨 <br />
-              {weather.weather[0].description}
-            </SubInfoCard>
-            <SubInfoCard>
-              국가 <br /> {weather.sys.country}
-            </SubInfoCard>
-            <SubInfoCard>
-              바람 <br /> {weather.wind.speed}m/s
-            </SubInfoCard>
-            <SubInfoCard>
-              습도 <br /> {weather.main.humidity}%
-            </SubInfoCard>
-            <SubInfoCard>
-              체감온도 <br /> {weather.main.feels_like}°C
-            </SubInfoCard>
-            <SubInfoCard>
-              기압 <br /> {weather.main.pressure}hPa
-            </SubInfoCard>
-            <SubInfoCard>
-              구름 <br /> {weather.clouds.all}%
-            </SubInfoCard>
-            <SubInfoCard>
-              일출 <br /> {setKoreanTime(weather.sys.sunrise)} (KST)
-            </SubInfoCard>
-            <SubInfoCard>
-              일몰 <br /> {setKoreanTime(weather.sys.sunset)} (KST)
-            </SubInfoCard>
+            {subInfoData.map((data) => (
+              <SubInfoCard key={data.label}>
+                <div>{data.label}</div>
+                <div>{data.value}</div>
+              </SubInfoCard>
+            ))}
           </SubInfoSection>
         </WeatherInfoContainer>
       )}
@@ -112,12 +91,13 @@ const SubInfoSection = styled(MainInfoSection)`
 `;
 
 const SubInfoCard = styled.div`
-  ${variables.flex("row", "center", "center")};
+  ${variables.flex("column", "center", "flex-start")};
   ${variables.fontStyle("3em", 800)}
   padding: 0.8em;
   height: 100%;
   border: 2px solid ${({ theme }) => theme.color.black};
   background-color: ${({ theme }) => theme.color.lightGray};
+  gap: 0.2em;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.green};

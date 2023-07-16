@@ -9,43 +9,35 @@ const SearchHistory = () => {
   const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
 
   const removeSearchHistory = (id: number) => {
-    const updatedHistoryList = searchHistoryList.filter((history) => history.id !== id);
-    setSearchHistoryList(updatedHistoryList);
-    window.sessionStorage.setItem("searchHistory", JSON.stringify(updatedHistoryList));
+    setSearchHistoryList((prevHistoryList) =>
+      prevHistoryList.filter((history) => history.id !== id),
+    );
   };
 
-  return (
-    <>
-      {isSearchHistoryOpen && (
-        <HistoryContainer>
-          <HistoryHeaderContainer>
-            <h1>최근 검색어</h1>
-            <CloseHistoryBox
-              onClick={() => {
-                setIsSearchHistoryOpen(false);
-              }}
-            >
-              닫기
-            </CloseHistoryBox>
-          </HistoryHeaderContainer>
+  if (!isSearchHistoryOpen) return null;
 
-          <HistoryListContainer>
-            {searchHistoryList &&
-              searchHistoryList.map((history) => (
-                <KeywordContainer key={history.id}>
-                  <Keyword>{history.keyword}</Keyword>
-                  <RemoveButton onClick={() => removeSearchHistory(history.id)}>
-                    <i className='fa-solid fa-x' />
-                  </RemoveButton>
-                </KeywordContainer>
-              ))}
-            {searchHistoryList.length === 0 && (
-              <NoHistoryText>최근 검색 기록이 없습니다.</NoHistoryText>
-            )}
-          </HistoryListContainer>
-        </HistoryContainer>
-      )}
-    </>
+  return (
+    <HistoryContainer>
+      <HistoryHeaderContainer>
+        <h1>최근 검색어</h1>
+        <CloseHistoryBox onClick={() => setIsSearchHistoryOpen(false)}>닫기</CloseHistoryBox>
+      </HistoryHeaderContainer>
+
+      <HistoryListContainer>
+        {searchHistoryList.length ? (
+          searchHistoryList.map((history) => (
+            <KeywordContainer key={history.id}>
+              <Keyword>{history.keyword}</Keyword>
+              <RemoveButton onClick={() => removeSearchHistory(history.id)}>
+                <i className='fa-solid fa-x' />
+              </RemoveButton>
+            </KeywordContainer>
+          ))
+        ) : (
+          <NoHistoryText>최근 검색 기록이 없습니다.</NoHistoryText>
+        )}
+      </HistoryListContainer>
+    </HistoryContainer>
   );
 };
 

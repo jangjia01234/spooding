@@ -13,30 +13,28 @@ const SearchBar = () => {
   const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-  // MARK: 검색 및 검색어 저장 기능
-  const setValue = (e: any) => {
+  const setValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
     setInput(value);
   };
 
   const handleButtonClick = () => setIsButtonClicked(true);
 
-  const showSearchResult = (e: any) => {
+  const showSearchResult = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (input) {
       const result = cities.filter((city) => city.name.toLowerCase().includes(input));
       setFilteredCities(result);
-      window.sessionStorage.setItem("resultCities", JSON.stringify(result));
 
       if (isButtonClicked) {
         const newHistory = [{ id: Date.now(), keyword: input }, ...searchHistoryList];
         setSearchHistoryList(newHistory);
-        window.sessionStorage.setItem("searchHistory", JSON.stringify(newHistory));
         setIsButtonClicked(false);
+
+        window.sessionStorage.setItem("resultCities", JSON.stringify(result));
+        window.sessionStorage.setItem("searchHistory", JSON.stringify(newHistory));
       }
-    } else {
-      console.log("검색 결과가 없습니다.");
     }
   };
 
@@ -51,7 +49,7 @@ const SearchBar = () => {
         onClick={showSearchHistory}
       />
       <SearchButton type='submit' onClick={handleButtonClick}>
-        <i className='fa-solid fa-magnifying-glass'></i>
+        <i className='fa-solid fa-magnifying-glass' />
       </SearchButton>
     </SearchContainer>
   );

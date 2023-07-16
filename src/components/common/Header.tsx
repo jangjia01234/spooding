@@ -16,23 +16,21 @@ const Header = () => {
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
 
   useEffect(() => {
-    const searchHistorySession = window.sessionStorage.getItem("searchHistory");
-    const searchHistorySessionJSON = JSON.parse(searchHistorySession || "[]");
-    if (searchHistorySessionJSON.length > 0) {
-      setSearchHistoryList(searchHistorySessionJSON);
-    }
-  }, [setSearchHistoryList]);
+    const getSessionData = (key: string) => {
+      const sessionData = window.sessionStorage.getItem(key) || "[]";
+      return JSON.parse(sessionData);
+    };
 
-  useEffect(() => {
-    const searchHistorySession = window.sessionStorage.getItem("resultCities");
-    const searchHistorySessionJSON = JSON.parse(searchHistorySession || "[]");
-    if (searchHistorySessionJSON.length > 0) setFilteredCities(searchHistorySessionJSON);
-    else setFilteredCities(cities);
-  }, [cities, setFilteredCities]);
+    const historySessionData = getSessionData("searchHistory");
+    const resultCitiesSessionData = getSessionData("resultCities");
+
+    setSearchHistoryList(historySessionData);
+    setFilteredCities(resultCitiesSessionData.length > 0 ? resultCitiesSessionData : cities);
+  }, [cities, setSearchHistoryList, setFilteredCities]);
 
   return (
     <HeaderContainer>
-      <GoToHome to={"/"}>
+      <GoToHome to='/'>
         <LogoImage src={logo} alt='spooding logo' />
         <LogoText>Spooding</LogoText>
       </GoToHome>

@@ -17,6 +17,8 @@ const LoadingContainer = styled.div`
   color: ${({ theme }) => theme.color.white};
 `;
 
-const LoadingGif = styled.img``;
+const LoadingGif = styled.img`
+  ${variables.widthHeight("50px", "50px")}
+`;
 
 export default Loading;

@@ -1,32 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import fetcher from "@/api/fetcher";
+import CityList from "@/components/CityList";
 import { PATH } from "@/constants";
-import { cityList, filteredCityList, weatherInfo } from "@/state/common";
+import { cityList, weatherInfo } from "@/state/common";
 import variables from "@/styles/variables";
 
 import LazyImage from "../lazyImages";
-
-const CityListComponent = () => {
-  const filteredCities = useRecoilValue<any[]>(filteredCityList);
-
-  return (
-    <CityListContainer>
-      {filteredCities.length > 0 ? (
-        filteredCities.map((city: any, id: number) => (
-          <Link key={id} to={`${PATH.DETAIL}/${city.id}`}>
-            <CityListBox>{city.name}</CityListBox>
-          </Link>
-        ))
-      ) : (
-        <div>데이터가 없습니다.</div>
-      )}
-    </CityListContainer>
-  );
-};
 
 const Home = () => {
   const [cities, setCities] = useRecoilState<any[]>(cityList as any);
@@ -47,14 +30,9 @@ const Home = () => {
         const { lat, lon } = randomCity.coord;
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=kr&units=metric`;
 
-        console.log("url", url);
-
         const res: any = await fetcher("get", url, {});
         if (res.data.length === 0) console.log("no data");
-        else {
-          setWeather(res.data);
-          console.log("weather:", res.data);
-        }
+        else setWeather(res.data);
       }
     } catch {
       console.error("날씨 정보를 받아오지 못했습니다.");
@@ -71,9 +49,7 @@ const Home = () => {
   }, [cities]);
 
   useEffect(() => {
-    if (randomCity) {
-      getWeather();
-    }
+    if (randomCity) getWeather();
   }, [randomCity]);
 
   return (
@@ -100,9 +76,9 @@ const Home = () => {
       </TitleContainer>
       <CityListTitleContainer>
         <CityListTitle>다양한 도시의 날씨를 살펴보세요</CityListTitle>
-        <i className='fa-solid fa-chevron-down'></i>
+        <i className='fa-solid fa-chevron-down' />
       </CityListTitleContainer>
-      <CityListComponent />
+      <CityList />
     </HomeContainer>
   );
 };
@@ -162,29 +138,6 @@ const CityListTitle = styled.h2`
   margin: 1em 0;
   text-align: center;
   white-space: nowrap;
-`;
-
-const CityListContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  height: 100%;
-  overflow: scroll;
-`;
-
-const CityListBox = styled.div`
-  ${variables.flex("row", "center", "center")}
-  ${variables.fontStyle("1.2em", 600)}
-  height: 150px;
-  padding: 1em;
-  color: ${({ theme }) => theme.color.black};
-  text-align: center;
-  background-color: ${({ theme }) => theme.color.gray};
-  border: 2px solid ${({ theme }) => theme.color.black};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.orange};
-  }
 `;
 
 export default Home;
