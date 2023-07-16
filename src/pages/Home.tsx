@@ -5,21 +5,17 @@ import styled from "styled-components";
 
 import fetcher from "@/api/fetcher";
 import { PATH } from "@/constants";
-import { cityList, searchSession, weatherInfo } from "@/state/common";
+import { cityList, filteredCityList, weatherInfo } from "@/state/common";
 
 import LazyImage from "../lazyImages";
 
 const CityListComponent = () => {
-  const [cities, setCities] = useRecoilState<any[]>(cityList);
-  const searchResult = useRecoilValue<any[]>(searchSession);
-
-  console.log("도시 목록:", cities);
-  console.log("검색 결과:", searchResult);
+  const filteredCities = useRecoilValue<any[]>(filteredCityList);
 
   return (
     <CityListContainer>
-      {cities.length > 0 ? (
-        cities.map((city: any, id: number) => (
+      {filteredCities.length > 0 ? (
+        filteredCities.map((city: any, id: number) => (
           <Link key={id} to={`${PATH.DETAIL}/${city.id}`}>
             <CityListBox>{city.name}</CityListBox>
           </Link>
@@ -38,14 +34,12 @@ const Home = () => {
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
-  // MARK: 도시 리스트 받아오기
   const getCityList = async () => {
     const res: any = await fetcher("get", `/data/citylist.json`, {});
     if (res.data.length === 0) console.log("no data");
     else setCities(res.data);
   };
 
-  // MARK: 날씨 정보 받아오기
   const getWeather = async () => {
     try {
       if (randomCity && randomCity.coord) {
@@ -70,13 +64,11 @@ const Home = () => {
     getCityList();
   }, []);
 
-  // MARK: 랜덤 도시 받아오기
   useEffect(() => {
     const selectedRandomCity = cities[Math.floor(Math.random() * cities.length)];
     setRandomCity(selectedRandomCity || null);
   }, [cities]);
 
-  // MARK: 날씨 정보 받아오기
   useEffect(() => {
     if (randomCity) {
       getWeather();

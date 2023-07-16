@@ -4,13 +4,12 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import logo from "/icons/spooding_icon_black.png";
-import { cityList, searchInput, searchSession } from "@/state/common";
+import { cityList, filteredCityList, searchInput } from "@/state/common";
 
 const Header = () => {
-  const [cities, setCities] = useRecoilState<any[]>(cityList);
+  const cities = useRecoilValue<any[]>(cityList);
   const [input, setInput] = useRecoilState<string>(searchInput);
-  const [filteredCities, setFilteredCities] = useRecoilState<any[]>(cityList);
-  const searchResult = useRecoilValue<any[]>(searchSession);
+  const [filteredCities, setFilteredCities] = useRecoilState<any[]>(filteredCityList);
 
   // MARK: 검색 기능
   const getValue = (e: any) => {
@@ -19,28 +18,30 @@ const Header = () => {
     }
   };
 
-  const filtered = cities.filter((items) => {
-    return items.name.toLowerCase().includes(input);
-  });
-
   const showSearchResult = (e: any) => {
     e.preventDefault();
 
-    if (input && filtered.length > 0) {
-      setFilteredCities(filtered);
-      window.sessionStorage.setItem("resultCities", JSON.stringify(filtered));
+    if (input) {
+      const result = cities.filter((city) => city.name.toLowerCase().includes(input));
+      setFilteredCities(result);
+      window.sessionStorage.setItem("resultCities", JSON.stringify(result));
     } else {
       console.log("검색 결과가 없습니다.");
     }
   };
 
   // MARK: 새로고침해도 검색결과 유지하는 기능
-  const searchResultSession = window.sessionStorage.getItem("resultCities");
-  const searchResultSessionJSON = JSON.parse(searchResultSession || "[]");
-
   useEffect(() => {
-    setFilteredCities(searchResultSessionJSON);
-  }, []);
+    const searchResultSession = window.sessionStorage.getItem("resultCities");
+    const searchResultSessionJSON = JSON.parse(searchResultSession || "[]");
+    if (searchResultSessionJSON.length > 0) {
+      setFilteredCities(searchResultSessionJSON);
+    } else {
+      setFilteredCities(cities);
+    }
+  }, [cities, setFilteredCities]);
+
+  console.log("filteredCities1", filteredCities);
 
   return (
     <HeaderContainer>

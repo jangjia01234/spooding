@@ -1,7 +1,12 @@
 import { atom } from "recoil";
 
 interface City {
-  id: string;
+  id: number;
+  name: string;
+}
+
+interface Filtered {
+  id: number;
   name: string;
 }
 
@@ -15,14 +20,14 @@ export const cityList = atom<City[]>({
   default: [],
 });
 
+export const filteredCityList = atom<Filtered[]>({
+  key: "filteredCityList",
+  default: [],
+});
+
 export const searchInput = atom<string>({
   key: "searchInput",
   default: "",
-});
-
-export const filteredCityList = atom<City[]>({
-  key: "filteredCityList",
-  default: [],
 });
 
 export const searchSession = atom<Session[]>({
