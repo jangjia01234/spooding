@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import logo from "/icons/spooding_icon_black.png";
-import { cityList, filteredCityList, searchHistory, searchInput } from "@/state/common";
+import { cityList, filteredCityList, isOpen, searchHistory, searchInput } from "@/state/common";
 
 import SearchHistory from "./SearchHistory";
 
@@ -13,6 +13,7 @@ const Header = () => {
   const [input, setInput] = useRecoilState<string>(searchInput);
   const [filteredCities, setFilteredCities] = useRecoilState<any[]>(filteredCityList);
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
+  const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   // MARK: 검색 및 검색어 저장 기능
@@ -42,6 +43,11 @@ const Header = () => {
     }
   };
 
+  const showSearchHistory = () => {
+    if (searchHistoryList.length > 0) setIsSearchHistoryOpen(true);
+    else setIsSearchHistoryOpen(false);
+  };
+
   // MARK: 새로고침해도 검색결과 유지하는 기능
   useEffect(() => {
     const searchHistorySession = window.sessionStorage.getItem("searchHistory");
@@ -69,6 +75,7 @@ const Header = () => {
           type='text'
           placeholder='도시명을 입력해 날씨, 기온, 습도 등을 알아보세요.'
           onChange={setValue}
+          onClick={showSearchHistory}
         />
         <SearchButton type='submit' onClick={handleButtonClick}>
           <i className='fa-solid fa-magnifying-glass'></i>

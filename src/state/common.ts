@@ -89,3 +89,8 @@ export const weatherInfo = atom({
     },
   },
 });
+
+export const isOpen = atom<boolean>({
+  key: "isOpen",
+  default: false,
+});

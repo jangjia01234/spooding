@@ -1,28 +1,39 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { searchHistory } from "@/state/common";
+import { isOpen, searchHistory } from "@/state/common";
 
 const SearchHistory = () => {
   const [searchHistoryList, setSearchHistoryList] = useRecoilState<any[]>(searchHistory);
+  const [isSearchHistoryOpen, setIsSearchHistoryOpen] = useRecoilState<boolean>(isOpen);
 
   return (
-    <HistoryContainer>
-      <HistoryHeaderContainer>
-        <Title>최근 검색어</Title>
-        <RemoveText>전체삭제</RemoveText>
-      </HistoryHeaderContainer>
+    <>
+      {isSearchHistoryOpen && (
+        <HistoryContainer>
+          <HistoryHeaderContainer>
+            <Title>최근 검색어</Title>
+            <CloseHistoryBox
+              onClick={() => {
+                setIsSearchHistoryOpen(false);
+              }}
+            >
+              닫기
+            </CloseHistoryBox>
+          </HistoryHeaderContainer>
 
-      <HistoryListContainer>
-        {searchHistoryList &&
-          searchHistoryList.map((history) => (
-            <KeywordContainer key={history.id}>
-              <Keyword>{history.keyword}</Keyword>
-              <RemoveButton>삭제</RemoveButton>
-            </KeywordContainer>
-          ))}
-      </HistoryListContainer>
-    </HistoryContainer>
+          <HistoryListContainer>
+            {searchHistoryList &&
+              searchHistoryList.map((history) => (
+                <KeywordContainer key={history.id}>
+                  <Keyword>{history.keyword}</Keyword>
+                  <RemoveButton>삭제</RemoveButton>
+                </KeywordContainer>
+              ))}
+          </HistoryListContainer>
+        </HistoryContainer>
+      )}
+    </>
   );
 };
 
@@ -48,7 +59,7 @@ const HistoryHeaderContainer = styled.div`
 
 const Title = styled.h1``;
 
-const RemoveText = styled.button`
+const CloseHistoryBox = styled.button`
   font-size: 0.9em;
   border-radius: 0.4em;
   outline: none;
