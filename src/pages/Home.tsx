@@ -39,7 +39,6 @@ const Home = () => {
           if (res.data.length === 0) {
             console.log("no data");
           } else {
-            console.log("Received Weather from API:", res.data);
             setWeather(res.data);
             localStorage.setItem(randomCity.id.toString(), JSON.stringify(res.data));
           }
